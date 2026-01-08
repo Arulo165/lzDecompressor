@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 """
 Standalone LZ77 Decompressor
 Decompresses LZ77-compressed files and saves them
@@ -94,20 +91,17 @@ def decompress_file(input_path, output_path=None):
         True on success, False on error
     """
     try:
-        # Read input file
         print(f"[*] Reading file: {input_path}")
         with open(input_path, 'rb') as f:
             compressed_data = f.read()
         
         print(f"[*] Input size: {len(compressed_data)} bytes")
         
-        # Decompress
         print("[*] Decompressing...")
         decompressed_data = UncompressLZ77(compressed_data)
         
         print(f"[*] Output size: {len(decompressed_data)} bytes")
         
-        # Determine output path
         if output_path is None:
             input_file = Path(input_path)
             if input_file.suffix.lower() == '.lz':
@@ -115,7 +109,6 @@ def decompress_file(input_path, output_path=None):
             else:
                 output_path = input_path + '.dec'
         
-        # Save decompressed file
         print(f"[*] Saving to: {output_path}")
         with open(output_path, 'wb') as f:
             f.write(decompressed_data)
@@ -145,20 +138,17 @@ def decompress_folder(input_folder, output_folder):
     input_path = Path(input_folder)
     output_path = Path(output_folder)
     
-    # Create output folder
     output_path.mkdir(parents=True, exist_ok=True)
     
     print(f"[*] Scanning folder: {input_folder}")
     
     decompressed_count = 0
     
-    # Find all .lz files recursively
     for lz_file in input_path.rglob('*.lz'):
-        # Preserve relative path structure
+        
         relative_path = lz_file.relative_to(input_path)
         output_file = output_path / relative_path.with_suffix('')
         
-        # Create subfolders if necessary
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
         print(f"[*] Decompressing: {relative_path}")
@@ -213,3 +203,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
