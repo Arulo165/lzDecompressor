@@ -1,15 +1,9 @@
-"""
-Standalone LZ77 Decompressor
-Decompresses LZ77-compressed files and saves them
-"""
-
 import sys
 import os
 from pathlib import Path
 
 
 def GetUncompressedSize(inData):
-    """Gets the uncompressed size from the LZ77 header"""
     offset = 4
     outSize = inData[1] | (inData[2] << 8) | (inData[3] << 16)
 
@@ -21,7 +15,6 @@ def GetUncompressedSize(inData):
 
 
 def UncompressLZ77(inData):
-    """Decompresses LZ77-compressed data"""
     if inData[0] != 0x11:
         print("[!] Warning: File does not start with 0x11. May not be LZ77-compressed.")
         return inData
@@ -80,16 +73,6 @@ def UncompressLZ77(inData):
 
 
 def decompress_file(input_path, output_path=None):
-    """
-    Decompresses an LZ77 file and saves it
-    
-    Args:
-        input_path: Path to the compressed input file
-        output_path: Path to the output file (optional)
-    
-    Returns:
-        True on success, False on error
-    """
     try:
         print(f"[*] Reading file: {input_path}")
         with open(input_path, 'rb') as f:
@@ -125,16 +108,6 @@ def decompress_file(input_path, output_path=None):
 
 
 def decompress_folder(input_folder, output_folder):
-    """
-    Decompresses all LZ77 files in a folder recursively
-    
-    Args:
-        input_folder: Path to the input folder
-        output_folder: Path to the output folder
-    
-    Returns:
-        Number of successfully decompressed files
-    """
     input_path = Path(input_folder)
     output_path = Path(output_folder)
     
@@ -161,7 +134,6 @@ def decompress_folder(input_folder, output_folder):
 
 
 def main():
-    """Main function with interactive input"""
     print("=" * 60)
     print("LZ77 Decompressor - Standalone Decompression Program")
     print("=" * 60)
@@ -203,4 +175,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
